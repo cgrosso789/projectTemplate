@@ -1,7 +1,14 @@
-# Project Template
+# Implementation of Quilt Fabric Estimator
 
-This is a Java Maven Project Template
+In this project, I have designed a calculator to estimate the amount of yardage of fabrics you would need to purchase to produce a desired quilt (or portions of a quilt), based on number, size and shape of rectangular or triangular pieces.
+     
+Many kinds of electronic quilting software packages are available on the market.  Here is a very popular one for $240: https://electricquilt.com/online-shop/electric-quilt-8/.  (These pricey packages allow you to *design* your quilts, as well as providing fabric calculators.)  This student has found FREE websites that offer some fabric calculation.  Here is one: https://app.prequilt.com/fabric-calculator.  You will notice that the only triangle calculation offered is the "half-square triangle," or HST.
 
+When you cut quilt fabric, you must add 1/4" "seam allowance" to all sides of what you want want your pieces to be when they are combined into a quilt.  For example, if you need squares that have a "finished size" of 2 inches, you simply cut out 2 1/2-inch squares.  42" of usable width of fabric on a bolt, and it's pretty easy to stand in JoAnn fabric and do the mental math as to how much yardage you'd need ("gee, I can get 16 x 2 1/2 squares from a 2 1/2 wide strip of fabric; I need 160 squares, so I need 10 x 2 1/2-inch strips, which is 25 inches, which is just less than 3/4 yards of fabric, so I'll buy 7/8 yd to be safe--boom").
+
+Not so with triangles.  Even HSTs that finish at 2x2 on the short edges need to be cut as 2 7/8" squares first, because of the additional allowance in the middle, and the pointy edges.  Forget 30-60-90 or equilateral triangles.
+
+**The problem is that fabric is expensive.**  So you want to purchase enough fabric to complete your project, with maybe an extra 1/8 or 1/4 yard in case of mistakes, but you CANNOT have even a 1/2" too little, because you will ruin your project.  So you need a ball-park estimator.
 
 # How to compile the project
 
