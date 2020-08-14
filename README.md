@@ -127,12 +127,16 @@ mvn clean compile assembly:single
 
 # How to run
 
-There are two drivers in the system, and both are launched from Main.  The AlternativeQuiltClient runs the program with pre-set mock objects and outputs information to the console.  The QuiltClient has a console-based UI.  To run your prefered driver, so into Main and comment out the driver you DON'T want, and uncomment the driver you DO want.  The QuiltClient's launcher looks like this:
-    QuiltClient qc = new QuiltClient();
-    qc.goBuild()
+There are two drivers in the system, and both are launched from Main.  The AlternativeQuiltClient runs the program with pre-set mock objects and outputs information to the console.  The QuiltClient has a console-based UI.  To run your prefered driver, so into Main and comment out the driver you DON'T want, and uncomment the driver you DO want. 
+
+The QuiltClient's launcher looks like this:
+
+    - QuiltClient qc = new QuiltClient();
+    - qc.goBuild()
+    
     
 And the AlternativeQuiltClient's launcher looks like this:    
-    AlternateQuiltClient.doIt();
+    - AlternateQuiltClient.doIt();
 
 
 ```bash
