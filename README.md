@@ -25,21 +25,39 @@ To develop my estimator, I determined 6 main kinds of shapes about which I would
 - https://www.dummies.com/education/math/trigonometry/use-the-law-of-cosines-with-sss/
 - https://www.mathsisfun.com/algebra/trig-solving-asa-triangles.html)
 
-To build the software for the estimator, I used two Design Patterns: the **Builder Pattern** and the **Template Pattern**.  (A very helpful treatise on the Builder Pattern came to me from https://www.geeksforgeeks.org/builder-design-pattern/).  The Builder Pattern turned out to be perfect for this project.  I had to not only estimate the fabric, but also give brief cutting directions, so that whomever uses the estimator would have equally-critical information on how the fabric was intended to be cut.  I literally needed to BUILD a set of directions step-by-step.  In this program, then, the client uses the Builder interface (PieceBuilder) to polymorphically instantiate a concrete Builder (HstBuilder, QstBuilder, RightTriangleBuilder, RectangleBuilder, SquareBuilder, or ScaleneTriangleBuilder).  It then instantiates a QuiltMaker (Director) object, to which it passes the Builder object.
-In between the Builder interface and the concrete Builders, I placed an abstract class: Piecing Assistant.  This abstract class together with the concrete Builder classes provide a Template Pattern for the Builders, as five of the ten methods for each builder are exactly the same (and are therefore "moved up" as concrete methods in the abstract class), and the other five have hooks from the abstract class into the concrete classes.  Also, the abstract class contains many fields necessary to all the concrete classes.  (The ScaleneTriangleBuilder overrides one concrete method in the abstract class.)  The job of a Builder, then, is to instantiate and build a Fabric object.  This object, which uses the FabricPlan interface, mainly just contains getters, setters and a toString method.  The Fabric object also stores a minCut double value, which it uses after the client is done obtaining user input, to add together and display all cuts of the SAME fabric for each of the DIFFERENT Fabric objects created during the information-collection phase.
-In addition to the Builder Pattern and Template Method, I also used the **Factory Method** *in the client class* to easily instantiate the particular concrete Builder class.
+To build the software for the estimator, I used two Design Patterns: the **Builder Pattern** and the **Template Pattern**.  (A very helpful treatise on the Builder Pattern came to me from https://www.geeksforgeeks.org/builder-design-pattern/).  The Builder Pattern turned out to be perfect for this project.  I had to not only estimate the fabric, but also give brief cutting directions, so that whomever uses the estimator would have equally-critical information on how the fabric was intended to be cut.  I literally needed to BUILD a set of directions step-by-step.  In this program, then, the client uses the Builder interface (PieceBuilder) to polymorphically instantiate a concrete Builder (HstBuilder, QstBuilder, RightTriangleBuilder, RectangleBuilder, SquareBuilder, or ScaleneTriangleBuilder).  It then instantiates a QuiltMaker (Director) object, to which it passes the Builder object.  The QuiltMaker is then periodically called to set its own fields to prepare for the big bang, when all the fields are set and ready; then the QuiltMaker's buyFabric method is called by the client to launch the construction of the Fabric object.
 
+In between the Builder interface and the concrete Builders, I placed an abstract class: Piecing Assistant.  This abstract class, together with the concrete Builder classes, provides a Template Pattern for the Builders, as five of the ten methods for each builder are exactly the same (and are therefore "moved up" as concrete methods into the abstract class), and the other five have hooks from the abstract class into the concrete classes.  Thus, the Template Pattern is excellent for code reduction and reuse.  Also, the abstract class contains several fields necessary to all the concrete classes.  The job of a concrete Builder, then, is to instantiate and build a Fabric object.  This object, which uses the FabricPlan interface, mainly just contains getters, setters and a toString method.  The Fabric object also stores a minCut double value, which it uses after the client is done obtaining user input, to add together and display all cuts of the SAME fabric for each of the DIFFERENT Fabric objects created during the information-collection phase.
+
+In addition to the Builder Pattern and Template Method, I also used the **Factory Method** *in the client class* to easily instantiate the particular concrete Builder class.  (**Iterators** were also used in for-loops in the client class, but these iterators were supplied by Java.)
+
+
+## Adding New Concrete Builder Classes:
+It did not occur to me until I finished the coding and am now writing this README that I forgot all about diamond (parallelogram) shapes--I sure have made plenty of quilts with diamonds in them!!  Because I will most certainly use my estimator, I will definitely add diamonds as another PieceBuilder concrete class.  The only thing I have to change will be to write the class (a copy-paste-edit from another concrete Builder), make sure it extends Piecing Assistant, and update my drivers (QuiltClient will just need its queryFirstSide and pieceFactory methods, and the display of choices updated).  Simple!!
+
+I almost never use fabric pieces that have curved edges; but if I did decide to add a CircleBuilder, the circle's radius would be exactly the same, functionally, as the side of a square.  I would use an **Adapter Pattern** that would call the SquareBuilder.
+
+## How it Works:
+If you run the UI Driver (QuiltClient), this is the basic logic:
+
+define ArrayList<Fabric> fabricList (of Fabric objects)
+define ArrayList<String> fabricNames (fabric names correspond to Strings in Fabric objects)
+    while true:
+        if not 1st time though loop:
+    
 ## Terms:
+
 - HST: Half-Square Triangle (hypotenuse of each triangle gets cut on the bias of the fabric)
 - QST: Quarter-Square Triangle (hypotenuse of each triangle gets cut on the grain of the fabric)
 - WOF: Width of Fabric (generally 42 inches)
 - seam allowance: (nearly universally understood to be 1/4")
 
-## Assumptions and limitations:
+## Assumptions and Limitations:
 - The UI graphic is console-based only at this time, but could be expanded one day.
 - The output at the end does not currently get written to a file, but it could easily be, to print out and take to the store.  It is also nearly as easy, however, to cut and paste the console output to a Word document and then take THAT to the store.
 - The program will limit the length of a side of a piece to 40-inches.  This is somewhat arbitrary, but if a long, skinny triangle is laid across the WOF, more than 2" could be consumed by the "pointy angles."  This is so unlikely to happen that this programming quilter chose for now not to worry about it.
 - The WOF is not alterable at this time, but could easily be by adding an additional user query.  The WOF could then be Fabric-object-specific by only changing the PiecingAssistant abstract class, which would change the *calculations* based on the WOF variable.  On the other hand, if you wanted to log the specific WOF in the Fabric object by building in a field for it, you would have to change the PieceBuilder interface as well as the PiecingAssistant class, the FabricPlan interface as well as the Fabric class, and the Quiltmaker class, as well.
+- No diamonds (parallelograms) yet--but they are coming!
 
 ## Additional credits:
 - For help with Scanner usage and exception-handling: https://stackoverflow.com/questions/24414299/java-scanner-exception-handling
