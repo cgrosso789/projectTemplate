@@ -33,17 +33,59 @@ In addition to the Builder Pattern and Template Method, I also used the **Factor
 
 
 ## Adding New Concrete Builder Classes:
-It did not occur to me until I finished the coding and am now writing this README that I forgot all about diamond (parallelogram) shapes--I sure have made plenty of quilts with diamonds in them!!  Because I will most certainly use my estimator, I will definitely add diamonds as another PieceBuilder concrete class.  The only thing I have to change will be to write the class (a copy-paste-edit from another concrete Builder), make sure it extends Piecing Assistant, and update my drivers (QuiltClient will just need its queryFirstSide and pieceFactory methods, and the display of choices updated).  Simple!!
+It did not occur to me until I finished the coding and am now writing this README that I forgot all about diamond (parallelogram) shapes--I sure have made plenty of quilts with diamonds in them!!  Because I will most certainly USE my estimator, I will definitely add diamonds as another PieceBuilder concrete class.  The only thing I have to change will be to write the class (a copy-paste-edit from another concrete Builder), make sure it extends Piecing Assistant, and update my drivers (QuiltClient will just need its queryFirstSide and pieceFactory methods, and the display of choices, updated).  Simple!!
 
-I almost never use fabric pieces that have curved edges; but if I did decide to add a CircleBuilder, the circle's radius would be exactly the same, functionally, as the side of a square.  I would use an **Adapter Pattern** that would call the SquareBuilder.
+I almost never use fabric pieces that have curved edges; but if I did decide to add a CircleBuilder, the circle's *radius* would be exactly the same, functionally, as the side of a square.  I would use an **Adapter Pattern** that would call the SquareBuilder.
 
 ## How it Works:
 If you run the UI Driver (QuiltClient), this is the basic logic:
 
-define ArrayList<Fabric> fabricList (of Fabric objects)
-define ArrayList<String> fabricNames (fabric names correspond to Strings in Fabric objects)
-    while true:
-        if not 1st time though loop:
+- define ArrayList<Fabric> fabricList (of Fabric objects)
+- define ArrayList<String> fabricNames (fabric names correspond to Strings in Fabric objects)
+- while true:
+    - if not 1st time though loop:
+        - ask to estimate another?, or quit (BREAK)
+    - display menu of shape choices:
+        - Half-Square Triangle
+        - Quarter-Square Triangle
+        - Other Right Triangle (Half-Rectangle)
+        - Scalene Triangle (no right angle)
+        - Square
+        - Rectangle
+    - <user enters int; choice validated>
+        - Factory Method returns corresponding Builder Object
+        - QuiltMaker instantiated
+    - if fabricNames not empty
+        - iterate through fabricNames; display previously-used fabricNames
+    - ask user to enter a new or previously-used fabricName?
+    - <user enters String; choice validated>
+    - QuiltMaker begins setting its fields with input or calculated values
+    - ask user how many of the pieces/block?
+    - <user enters int; choice validated>
+    - ask user how many blocks/quilt?
+    - <user enters int; choice validated>
+    - ask user for the length of a side?
+    - <user enters double; choice validated>
+    - if Builder instanceof RightTriangle, ScaleneTriangle or Rectangle
+        - ask user for length of 2nd side?
+        - <user enters double; choice validated>
+    - if Builder instance of Scalene Trianlge
+        - ask user for length of 3rd side?
+        - <user enters double; choice validated>
+    - add unique fabricName to fabricNames
+    - (QuiltMaker has finished setting all of its own fields)
+    - BOOM: **QuiltMaker calls Builder's methods IN THE PROPER ORDER to produce Fabric object**
+    - add Fabric object to fabricList
+- end while
+- display: "Here are your completed estimates:"
+- iterate through each fabricName
+    - iterate through fabricList, matching fabricName
+        - add all minCutInches for this fabricName
+        - **print out Fabric object's toString method**
+    - end for (fabricList)
+    - **print Grand Total of inches/yardage for this fabricName**
+-end for (fabricName)
+    
     
 ## Terms:
 
