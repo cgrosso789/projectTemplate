@@ -35,7 +35,7 @@ In addition to the Builder Pattern and Template Method, I also used the **Factor
 ## Adding New Concrete Builder Classes:
 It did not occur to me until I finished the coding and am now writing this README that I forgot all about diamond (parallelogram) shapes--I sure have made plenty of quilts with diamonds in them!!  Because I will most certainly USE my estimator, I will definitely add diamonds as another PieceBuilder concrete class.  The only thing I have to change will be to write the class (a copy-paste-edit from another concrete Builder), make sure it extends Piecing Assistant, and update my drivers (QuiltClient will just need its queryFirstSide and pieceFactory methods, and the display of choices, updated).  Simple!!
 
-I almost never use fabric pieces that have curved edges; but if I did decide to add a CircleBuilder, the circle's *radius* would be exactly the same, functionally, as the side of a square.  I would use an **Adapter Pattern** that would call the SquareBuilder.
+I almost never use fabric pieces that have curved edges; but if I did decide to add a CircleBuilder, the circle's *diameter* would be exactly the same, functionally, as the side of a square.  I would use an **Adapter Pattern** that would call the SquareBuilder.
 
 ## How it Works:
 If you run the UI Driver (QuiltClient), this is the basic logic:
